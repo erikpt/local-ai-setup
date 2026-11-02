@@ -7,9 +7,11 @@ How the numbers in [README.md](README.md) were produced, and what they can and c
 | | |
 |---|---|
 | GPU | NVIDIA RTX 4090 24 GB (Gigabyte), driver 615.71.09, power limit 450 W |
-| CPU / RAM | Intel i7-8700K, 64 GB DDR4, ASUS ROG Strix Z370-E (PCIe 3.0 x16 to the GPU) |
-| OS | Ubuntu, kernel 7.0.0-38 |
-| Inference | llama.cpp `llama-server` (commit `d89651a`, 2026-10-05), CUDA build, behind [llama-swap](https://github.com/mostlygeek/llama-swap) v262 |
+| CPU / board | Intel i7-8700K (6C/12T), ASUS ROG Strix Z370-E (PCIe 3.0 x16 to the GPU) |
+| RAM | 64 GB DDR4 (4 × 16 GB, 3200-rated kit running at 2133 MT/s) |
+| Storage | Crucial P3 4 TB NVMe |
+| OS | Ubuntu 26.04.1 LTS, kernel 7.0.0-38-generic |
+| Inference | llama.cpp `llama-server` 0.5.0-dev (commit `d89651a`, 2026-10-05), CUDA build, behind [llama-swap](https://github.com/mostlygeek/llama-swap) v262 |
 | Harness | [`bench.py`](bench.py) — Python 3.14 stdlib only, talks to llama-swap's OpenAI-compatible API |
 
 Every model ran **entirely on the GPU** with **128K context** (`-c 131072`), **flash attention**, **one request slot**

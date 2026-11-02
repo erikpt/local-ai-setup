@@ -4,6 +4,25 @@ Ten open-weight models — Qwen, IBM Granite, Meta Muse Glimmer and Google Gemma
 with **llama.cpp at full 128K context, entirely on a single 24 GB RTX 4090**, and tested for speed, coding accuracy
 and refusals. How it was done, and the caveats: **[METHODOLOGY.md](METHODOLOGY.md)**.
 
+## Test system
+
+| Component | Spec |
+|---|---|
+| GPU | NVIDIA GeForce RTX 4090, 24 GB GDDR6X (Gigabyte), stock clocks, 450 W power limit |
+| GPU link | PCIe 3.0 x16 (CPU lanes) |
+| CPU | Intel Core i7-8700K, 6 cores / 12 threads, up to 4.7 GHz |
+| Motherboard | ASUS ROG Strix Z370-E Gaming (BIOS 3005) |
+| RAM | 64 GB DDR4 (4 × 16 GB G.Skill F4-3200C16), running at **2133 MT/s** (XMP off) |
+| Storage | Crucial P3 4 TB NVMe (models) |
+| OS | Ubuntu 26.04.1 LTS, kernel 7.0.0-38-generic |
+| NVIDIA driver | 615.71.09 |
+| Inference | llama.cpp `llama-server` 0.5.0-dev, commit `d89651a` (2026-10-05), CUDA build, GCC 15.2 |
+| Model router | llama-swap v262 |
+| Run date | 2026-11-02 |
+
+All models ran fully on the GPU, so CPU, RAM speed and PCIe 3.0 have little effect on these numbers beyond model
+load time — results on a newer platform with the same GPU should be very close.
+
 ## TL;DR
 
 - **Meta Muse Glimmer 30B is the standout.** Perfect coding score, the fastest model at long context (generation barely
