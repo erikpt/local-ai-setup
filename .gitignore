@@ -1,0 +1,3 @@
+__pycache__/
+*.pyc
+bench/run-qwen-baseline-INVALID-*.log

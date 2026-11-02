@@ -1,0 +1,84 @@
+# llama-swap model entries used for the 2026-11-02 benchmark (llama-swap v262, llama.cpp d89651a).
+# Extracted from /etc/llama-swap/config.yaml; API keys and unrelated models omitted.
+models:
+  "qwen3.8-27b":
+    name: "Qwen3.8 27B (UD-Q5_K_M)"
+    cmd: |
+      /models/src/llama.cpp/build/bin/llama-server
+      --host 127.0.0.1 --port ${PORT} --metrics --jinja
+      -m /models/qwen3.8-27b/Qwen3.8-27B-UD-Q5_K_M.gguf
+      -c 131072 -ngl 99 -fa on
+      --cache-type-k q8_0 --cache-type-v q4_0
+      --parallel 1
+
+  "granite-4.2-8b":
+    name: "Granite 4.2 8B (Q8_0)"
+    cmd: |
+      /models/src/llama.cpp/build/bin/llama-server --host 127.0.0.1 --port ${PORT} --metrics --jinja
+      -m /models/granite-4.2-8b/granite-4.2-8b-Q8_0.gguf
+      -ngl 99 -fa on --parallel 1
+      -c 131072 --cache-type-k q8_0 --cache-type-v q8_0 --temp 1.0 --top-p 0.95
+
+  "granite-4.2-8b-abl":
+    name: "Granite 4.2 8B Surgical Abliterated (Q8_0)"
+    cmd: |
+      /models/src/llama.cpp/build/bin/llama-server --host 127.0.0.1 --port ${PORT} --metrics --jinja
+      -m /models/granite-4.2-8b-abl/Granite-4.2-8B-Surgical-Abliterated.Q8_0.gguf
+      -ngl 99 -fa on --parallel 1
+      -c 131072 --cache-type-k q8_0 --cache-type-v q8_0 --temp 1.0 --top-p 0.95
+
+  "muse-glimmer-30b":
+    name: "Muse Glimmer 30B (Unsloth UD-Q5_K_M)"
+    cmd: |
+      /models/src/llama.cpp/build/bin/llama-server --host 127.0.0.1 --port ${PORT} --metrics --jinja
+      -m /models/muse-glimmer-30b/Muse-Glimmer-30B-UD-Q5_K_M.gguf
+      -ngl 99 -fa on --parallel 1
+      -c 131072 --cache-type-k q8_0 --cache-type-v q8_0 --temp 1.0 --top-p 0.95 --top-k 64
+
+  "muse-glimmer-30b-abl":
+    name: "Muse Glimmer 30B Abliterated (Q5_K_M)"
+    cmd: |
+      /models/src/llama.cpp/build/bin/llama-server --host 127.0.0.1 --port ${PORT} --metrics --jinja
+      -m /models/muse-glimmer-30b-abl/Muse-Glimmer-30B-Abliterated-Q5_K_M.gguf
+      -ngl 99 -fa on --parallel 1
+      -c 131072 --cache-type-k q8_0 --cache-type-v q8_0 --temp 1.0 --top-p 0.95 --top-k 64
+
+  "muse-glimmer-30b-heretic":
+    name: "Muse Glimmer 30B Heretic (Q5_K_M)"
+    cmd: |
+      /models/src/llama.cpp/build/bin/llama-server --host 127.0.0.1 --port ${PORT} --metrics --jinja
+      -m /models/muse-glimmer-30b-heretic/Muse-Glimmer-30B-Heretic-Q5_K_M.gguf
+      -ngl 99 -fa on --parallel 1
+      -c 131072 --cache-type-k q8_0 --cache-type-v q8_0 --temp 1.0 --top-p 0.95 --top-k 64
+
+  "gemma-4-31b":
+    name: "Gemma 4 31B (Google QAT Q4_0)"
+    cmd: |
+      /models/src/llama.cpp/build/bin/llama-server --host 127.0.0.1 --port ${PORT} --metrics --jinja
+      -m /models/gemma-4-31b/gemma-4-31B_q4_0-it.gguf
+      -ngl 99 -fa on --parallel 1
+      -c 131072 --cache-type-k q8_0 --cache-type-v q4_0 --temp 1.0 --top-p 0.95 --top-k 64
+
+  "gemma-4-31b-unsloth":
+    name: "Gemma 4 31B (Unsloth UD-Q4_K_XL)"
+    cmd: |
+      /models/src/llama.cpp/build/bin/llama-server --host 127.0.0.1 --port ${PORT} --metrics --jinja
+      -m /models/gemma-4-31b-unsloth/gemma-4-31B-it-UD-Q4_K_XL.gguf
+      -ngl 99 -fa on --parallel 1
+      -c 131072 --cache-type-k q8_0 --cache-type-v q4_0 -ub 256 --temp 1.0 --top-p 0.95 --top-k 64
+
+  "gemma-4-31b-hauhau":
+    name: "Gemma 4 31B HauhauCS Uncensored (Q4_K_M)"
+    cmd: |
+      /models/src/llama.cpp/build/bin/llama-server --host 127.0.0.1 --port ${PORT} --metrics --jinja
+      -m /models/gemma-4-31b-hauhau/Gemma4-31B-QAT-Uncensored-HauhauCS-Balanced-Q4_K_M.gguf
+      -ngl 99 -fa on --parallel 1
+      -c 131072 --cache-type-k q8_0 --cache-type-v q4_0 -ub 256 --temp 0.6 --top-k 64
+
+  "gemma-4-31b-abl":
+    name: "Gemma 4 31B Abliterated (Q4_K_M)"
+    cmd: |
+      /models/src/llama.cpp/build/bin/llama-server --host 127.0.0.1 --port ${PORT} --metrics --jinja
+      -m /models/gemma-4-31b-abl/gemma-4-31B-it-abliterated.Q4_K_M.gguf
+      -ngl 99 -fa on --parallel 1
+      -c 131072 --cache-type-k q8_0 --cache-type-v q4_0 -ub 256 --temp 1.0 --top-p 0.95 --top-k 64
