@@ -1,0 +1,31 @@
+# llama-swap entries for image/video (ComfyUI) and voice (Chatterbox).
+# Append under `models:` in /etc/llama-swap/config.yaml (indentation matches).
+# llama-swap starts/stops these like LLMs, so they never fight an LLM for VRAM.
+#
+# ComfyUI: load it via llama-swap (web UI "Load", or any API request to model "comfyui"),
+# then open http://<server>:8188 in a browser. ComfyUI has NO authentication: anyone on
+# the LAN who can reach :8188 can run jobs and upload files. Change --listen to 127.0.0.1
+# and use an SSH tunnel if that's not OK.
+
+  "comfyui":
+    name: "ComfyUI (FLUX.2 Klein 4B image, Wan 2.2 5B video)"
+    description: "Web UI on :8188 once loaded"
+    proxy: "http://127.0.0.1:8188"
+    checkEndpoint: "/system_stats"
+    cmd: |
+      /models/comfyui/venv/bin/python /models/comfyui/main.py
+      --listen 0.0.0.0 --port 8188
+    ttl: 1800
+
+  # OpenAI-compatible TTS: POST /v1/audio/speech {"model":"chatterbox","input":"...","voice":"<name>"}
+  # Voice clones: 5-10 s WAV clips in /models/chatterbox/voices/<name>.wav
+  "chatterbox":
+    name: "Chatterbox TTS (MIT)"
+    description: "Text-to-speech with voice cloning"
+    checkEndpoint: "/health"
+    env:
+      - "HF_HOME=/models/chatterbox/hf-cache"
+    cmd: |
+      /models/chatterbox/venv/bin/python /models/chatterbox/server.py
+      --host 127.0.0.1 --port ${PORT} --voices /models/chatterbox/voices
+    ttl: 1800
