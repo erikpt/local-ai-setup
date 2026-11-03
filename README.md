@@ -31,7 +31,7 @@ clients (OpenCode, Hermes, curl, browser)
 
 | File | Purpose |
 |---|---|
-| [`build-kvstream.sh`](build-kvstream.sh) | Builds the [adaptive KV-streaming llama.cpp fork](src/) (submodule) as `llama-server-kvstream` |
+| [`build-kvstream.sh`](build-kvstream.sh) | Clones and builds the [adaptive KV-streaming llama.cpp fork](https://github.com/RaymondHuang210129/llama.cpp-adaptive-kv-streaming) as `llama-server-kvstream` (experimental; not used by the benchmark) |
 | [`fix-libs.sh`](fix-libs.sh) | Installs that build's shared libraries into `/usr/local/lib` |
 | [`dl-coder-next.sh`](dl-coder-next.sh) | Downloads Qwen3-Coder-Next GGUFs (Q3/Q4, MoE with CPU expert offload) |
 | [`dl-eval-batch.sh`](dl-eval-batch.sh) | Downloads the Granite / Glimmer / Gemma GGUFs evaluated in `bench/` |
