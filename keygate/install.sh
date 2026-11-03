@@ -65,6 +65,12 @@ ExecStart=/usr/local/bin/llama-swap -config /etc/llama-swap/config.yaml -listen 
 EOF
 llama-swap -config "$LS_CONFIG" -validate
 
+# config and its backups hold keys: llama-swap's user may read the config, nobody else; backups root-only
+chown root:llama "$(dirname "$LS_CONFIG")" "$LS_CONFIG"
+chmod 0750 "$(dirname "$LS_CONFIG")"
+chmod 0640 "$LS_CONFIG"
+find "$(dirname "$LS_CONFIG")" -maxdepth 1 -type f ! -path "$LS_CONFIG" -exec chown root:root {} + -exec chmod 0600 {} +
+
 systemctl daemon-reload
 after=$(cat "$LS_CONFIG" /etc/systemd/system/llama-swap.service.d/keygate.conf | sha256sum)
 if [[ $before != "$after" ]]; then

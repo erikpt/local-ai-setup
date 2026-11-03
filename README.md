@@ -19,6 +19,8 @@ clients (OpenCode, Hermes, curl, browser)
 
 ## Results
 
+- **[WRITEUP.md](WRITEUP.md)**: the full story: hardware, which model to use for what, benchmark results, media,
+  access control, security and lessons learned.
 - **[bench/](bench/)** — benchmark of 10 open-weight LLMs (Qwen, IBM Granite, Meta Muse Glimmer, Google Gemma and
   uncensored variants) at 128K context: speed, unit-tested coding, refusals. Short version: **Muse Glimmer 30B** had
   a perfect coding score, the best long-context speed and the smallest memory footprint.
