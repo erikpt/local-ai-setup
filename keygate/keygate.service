@@ -1,0 +1,35 @@
+[Unit]
+Description=keygate: per-key model permissions in front of llama-swap
+After=network-online.target llama-swap.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=keygate
+Group=keygate
+EnvironmentFile=/etc/keygate/keygate.env
+ExecStart=/usr/bin/python3 -I /usr/local/bin/keygate serve
+Restart=always
+RestartSec=2
+# SQLite database lives in /var/lib/keygate (keygate:keygate, 0700)
+StateDirectory=keygate
+StateDirectoryMode=0700
+
+NoNewPrivileges=true
+CapabilityBoundingSet=
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+RestrictNamespaces=true
+RestrictRealtime=true
+LockPersonality=true
+MemoryDenyWriteExecute=true
+SystemCallArchitectures=native
+
+[Install]
+WantedBy=multi-user.target

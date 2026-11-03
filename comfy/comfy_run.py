@@ -11,7 +11,7 @@ Outputs land in /models/comfyui/output/.
 """
 import argparse, json, os, random, re, sys, time, urllib.request
 
-URL = os.environ.get("LLAMA_SWAP_URL", "http://127.0.0.1:8080") + "/upstream/comfyui"
+URL = os.environ.get("LLAMA_SWAP_URL", "http://127.0.0.1:8081") + "/upstream/comfyui"
 
 
 def key():

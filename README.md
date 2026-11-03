@@ -8,9 +8,11 @@ holds the GPU at a time and clients just ask for a model by name.
 clients (OpenCode, Hermes, curl, browser)
         │  OpenAI-compatible API + API key
         ▼
-   llama-swap :8080 ──starts/stops on demand──►  llama-server (llama.cpp)   LLMs, 128K context
-                                           ├──►  ComfyUI :8188              FLUX.2 Klein images, Wan 2.2 video
-                                           └──►  Chatterbox                 text-to-speech, voice cloning
+   keygate :8080          checks the key may use the requested model, logs to SQLite
+        ▼
+   llama-swap 127.0.0.1:8081 ──starts/stops on demand──►  llama-server (llama.cpp)   LLMs, 128K context
+                                                    ├──►  ComfyUI :8188              FLUX.2 Klein images, Wan 2.2 video
+                                                    └──►  Chatterbox                 text-to-speech, voice cloning
 ```
 
 **Hardware:** RTX 4090 24 GB · i7-8700K · 64 GB DDR4 · ASUS Z370-E (PCIe 3.0) · Ubuntu.
@@ -33,10 +35,21 @@ clients (OpenCode, Hermes, curl, browser)
 | [`fix-libs.sh`](fix-libs.sh) | Installs that build's shared libraries into `/usr/local/lib` |
 | [`dl-coder-next.sh`](dl-coder-next.sh) | Downloads Qwen3-Coder-Next GGUFs (Q3/Q4, MoE with CPU expert offload) |
 | [`dl-eval-batch.sh`](dl-eval-batch.sh) | Downloads the Granite / Glimmer / Gemma GGUFs evaluated in `bench/` |
-| [`new-llama-api-key.sh`](new-llama-api-key.sh) | Adds an API key to `/etc/llama-swap/config.yaml` and reloads llama-swap |
 | [`model-stats.sh`](model-stats.sh) | Prints an earlier benchmark table plus what llama-swap currently has loaded |
 | [`toksec.sh`](toksec.sh) | Quick tokens/second check against a llama-server endpoint |
 | [`llama-dash.sh`](llama-dash.sh) | Terminal dashboard: GPU/CPU load, temps, throttling, live tok/s per port |
+
+### API keys (keygate)
+
+llama-swap's own keys are all-or-nothing, so [`keygate/`](keygate/) sits in front of it: a single-file Python proxy
+(standard library + SQLite, no dependencies) that gives each key a label and a list of models it may use, and logs
+every request. See [keygate/README.md](keygate/README.md).
+
+```bash
+sudo keygate add "opencode laptop" --models muse-glimmer-30b-heretic,granite-4.2-8b   # prints the new key once
+sudo keygate list          # keys, models, last use
+sudo keygate usage         # requests and tokens per key and model
+```
 
 Per-model `llama-server` settings used for the benchmark (128K context, flash attention, quantized KV cache):
 [`bench/models.yaml`](bench/models.yaml).
@@ -85,4 +98,6 @@ It has no authentication — anyone who can reach that port can use it.
 
 - Paths assume models under `/models` and llama-swap config at `/etc/llama-swap/config.yaml`; adjust to taste.
 - Only one model fits in 24 GB at a time; switching takes ~5–60 s depending on size.
-- API keys live only in the llama-swap config on the server — nothing in this repo contains them.
+- Client keys live only in keygate's database on the server (as hashes); nothing in this repo contains them.
+- Scripts running on the server itself (`bench.py`, `comfy_run.py`) talk to llama-swap directly on `127.0.0.1:8081`
+  with its internal key.

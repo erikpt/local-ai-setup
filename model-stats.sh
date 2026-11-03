@@ -71,7 +71,7 @@ EOF
 
 # Live status from llama-swap, if reachable and a key is available
 KEY=${LLAMA_SWAP_KEY:-$(sudo -n grep -oE 'sk-[a-f0-9]+' /etc/llama-swap/config.yaml 2>/dev/null | head -1)}
-if [[ -n $KEY ]] && RUN=$(curl -sf -m 3 -H "Authorization: Bearer $KEY" localhost:8080/running 2>/dev/null); then
+if [[ -n $KEY ]] && RUN=$(curl -sf -m 3 -H "Authorization: Bearer $KEY" localhost:8081/running 2>/dev/null); then
   loaded=$(echo "$RUN" | jq -r '[.running[]? | "\(.model) (\(.state))"] | join(", ")' 2>/dev/null)
   vram=$(nvidia-smi --query-gpu=memory.used,memory.total --format=csv,noheader,nounits 2>/dev/null | awk -F', ' '{printf "%.1f / %.1f GB", $1/1024, $2/1024}')
   echo

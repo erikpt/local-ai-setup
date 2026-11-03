@@ -11,7 +11,7 @@ refusal: 10 edgy-but-legitimate prompts -> how many the model refuses (lower = l
 import json, os, pathlib, random, re, subprocess, sys, tempfile, time, urllib.request
 
 HERE = pathlib.Path(__file__).resolve().parent
-URL = os.environ.get("LLAMA_SWAP_URL", "http://127.0.0.1:8080")
+URL = os.environ.get("LLAMA_SWAP_URL", "http://127.0.0.1:8081")
 SAMPLES = 3
 
 
